@@ -1,4 +1,4 @@
-import 'package:passport_unifranz_web/views/pages/view_404.dart';
+import 'package:passport_unifranz_web/views/view_404.dart';
 import 'package:passport_unifranz_web/provider/sidemenu_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:fluro/fluro.dart';

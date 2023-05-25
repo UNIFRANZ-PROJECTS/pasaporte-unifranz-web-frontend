@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:passport_unifranz_web/views/admin/menu.dart';
-import 'package:passport_unifranz_web/views/pages/admin/navbar.dart';
-import 'package:passport_unifranz_web/views/pages/admin/sidebar.dart';
+import 'package:passport_unifranz_web/views/admin/menu/menu.dart';
 import 'package:passport_unifranz_web/provider/sidemenu_provider.dart';
+import 'package:passport_unifranz_web/views/admin/menu/navbar.dart';
+import 'package:passport_unifranz_web/views/admin/menu/sidebar.dart';
 
 class DashboardLayout extends StatefulWidget {
   final Widget child;

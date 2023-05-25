@@ -29,5 +29,5 @@ class CategoryState extends Equatable {
           sortColumnIndex: sortColumnIndex ?? this.sortColumnIndex);
 
   @override
-  List<Object> get props => [existCategories, listCategories];
+  List<Object> get props => [existCategories, listCategories, isLoading, ascending];
 }

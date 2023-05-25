@@ -14,7 +14,7 @@ class ButtonComponent extends StatelessWidget {
       child: MaterialButton(
         minWidth: 200,
         padding: const EdgeInsets.symmetric(vertical: 19),
-        color: const Color(0xffFC5000),
+        color: const Color(0xffF26522),
         disabledColor: Colors.grey,
         onPressed: onPressed,
         child: stateLoading
@@ -37,6 +37,45 @@ class ButtonComponent extends StatelessWidget {
   }
 }
 
+class ButtonBlackComponent extends StatelessWidget {
+  final String text;
+  final Function()? onPressed;
+  final bool stateLoading;
+  const ButtonBlackComponent({Key? key, required this.text, required this.onPressed, this.stateLoading = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MaterialButton(
+        padding: const EdgeInsets.symmetric(vertical: 19),
+        color: Colors.black,
+        disabledColor: Colors.grey,
+        onPressed: onPressed,
+        child: stateLoading
+            ? Center(
+                child: Image.asset(
+                'assets/images/load.gif',
+                fit: BoxFit.cover,
+                height: 20,
+              ))
+            : Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(text,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      )),
+                ),
+              ),
+      ),
+    );
+  }
+}
+
 class ButtonIconComponent extends StatelessWidget {
   final Widget icon;
   final String text;
@@ -50,7 +89,7 @@ class ButtonIconComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      color: const Color(0xffFC5000),
+      color: const Color(0xffF26522),
       disabledColor: Colors.grey,
       onPressed: onPressed,
       child: stateLoading
@@ -165,7 +204,7 @@ class NumberComponent extends StatelessWidget {
     return RawMaterialButton(
       onPressed: () {},
       elevation: 2.0,
-      fillColor: iconColor ? const Color(0xffFC5000) : Colors.white,
+      fillColor: iconColor ? const Color(0xffF26522) : Colors.white,
       shape: const CircleBorder(),
       child: Text(
         text,

@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:passport_unifranz_web/models/event_model.dart';
 import 'package:passport_unifranz_web/provider/auth_provider.dart';
 import 'package:passport_unifranz_web/services/cafe_api.dart';
+import 'package:passport_unifranz_web/services/local_storage.dart';
 import 'package:passport_unifranz_web/services/services.dart';
-import 'package:passport_unifranz_web/views/client/access/login_client.dart';
+import 'package:passport_unifranz_web/views/home/access/login_client.dart';
 
 import 'package:passport_unifranz_web/components/compoents.dart';
+import 'package:passport_unifranz_web/views/home/event_details_background.dart';
+import 'package:passport_unifranz_web/views/home/event_details_content.dart';
 import 'package:provider/provider.dart';
 
 class CardExpanded extends StatefulWidget {
@@ -36,27 +41,23 @@ class _CardExpandedState extends State<CardExpanded> {
                   child: GestureDetector(
                       onTap: () {},
                       child: ContainerComponent(
-                        height: sizeHeight / 1.5,
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        child: (size.width > 1000)
-                            ? Row(
-                                children: [
-                                  Expanded(
-                                    child: cards(sizeHeight)[0],
-                                  ),
-                                  Expanded(
-                                    child: cards(sizeHeight)[1],
-                                  ),
-                                ],
-                              )
-                            : SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    ...cards(sizeHeight),
+                          radius: (size.width > 1000) ? 30 : 0,
+                          height: (size.width > 1000) ? sizeHeight / 1.5 : size.height,
+                          width: (size.width > 1000) ? MediaQuery.of(context).size.width / 1.1 : size.width,
+                          child: (size.width > 1000)
+                              ? Row(
+                                  children: cards(sizeHeight),
+                                )
+                              : Stack(
+                                  fit: StackFit.expand,
+                                  children: <Widget>[
+                                    EventDetailBackground(event: widget.event),
+                                    EventDetailsContent(
+                                      event: widget.event,
+                                      onPressed: () => loginshow(context),
+                                    ),
                                   ],
-                                ),
-                              ),
-                      )),
+                                ))),
                 )),
           ),
           onTap: () {
@@ -68,23 +69,26 @@ class _CardExpandedState extends State<CardExpanded> {
   }
 
   List<Widget> cards(double sizeHeight) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30),
-          ),
-          child: Image.network(
-            widget.event.image,
-            height: sizeHeight / 1.5,
-            fit: BoxFit.fitWidth,
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(30),
+            ),
+            child: Image.network(
+              widget.event.image,
+              height: sizeHeight / 1.5,
+              fit: BoxFit.fitWidth,
+            ),
           ),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: SingleChildScrollView(
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -128,7 +132,13 @@ class _CardExpandedState extends State<CardExpanded> {
                     const SizedBox(width: 8),
                   ],
                 ),
-              ButtonComponent(text: 'ASISTIR', onPressed: () => loginshow(context))
+              authProvider.authStatusStudent != AuthStatusStudent.authenticated
+                  ? ButtonComponent(text: 'ASISTIR', onPressed: () => loginshow(context))
+                  : !widget.event.studentIds
+                          .map((e) => e.id)
+                          .contains(json.decode(LocalStorage.prefs.getString('student')!)['id'])
+                      ? ButtonComponent(text: 'ASISTIR', onPressed: () => loginshow(context))
+                      : Container()
             ],
           ),
         ),

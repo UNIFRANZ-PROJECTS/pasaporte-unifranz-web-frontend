@@ -1,6 +1,10 @@
+String host() => 'https://unifranz.site/api';
+// String host() => 'http://localhost:8001/api';
+
 String setLogin() => '/auth';
 //get events
 String events(String? id) => '/events/${id ?? ''}';
+String eventsAdmin(String? id) => '/events/admin/${id ?? ''}';
 String reportStudentsByEvent(String? id) => '/events/report/student/$id';
 //get events by campus
 String eventsCampus(String campus) => '/events/campus/$campus';
@@ -38,3 +42,6 @@ String dashboardFilter() => '/dashboard/filter';
 //reportes
 String reportsFilter() => '/reports';
 String reportsDownload() => '/reports/download';
+
+//chat
+String getChat(String id) => '/events/messages/$id';

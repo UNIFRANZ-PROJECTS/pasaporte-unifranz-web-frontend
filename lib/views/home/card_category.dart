@@ -27,7 +27,7 @@ class CategoryWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: isSelected ? Colors.white : const Color(0x99FFFFFF), width: 3),
           borderRadius: const BorderRadius.all(Radius.circular(16)),
-          color: isSelected ? const Color(0xffFC5000) : Colors.transparent,
+          color: isSelected ? Colors.white : Colors.transparent,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,26 +35,20 @@ class CategoryWidget extends StatelessWidget {
             category.icon == 'todos'
                 ? Icon(
                     Icons.search,
-                    color: isSelected ? Colors.white : Colors.black,
+                    color: isSelected ? const Color(0xffF26522) : Colors.white,
                     size: 40,
                   )
                 : SvgPicture.network(
                     category.icon,
-                    colorFilter: ColorFilter.mode(isSelected ? Colors.white : Colors.black, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(isSelected ? const Color(0xffF26522) : Colors.white, BlendMode.srcIn),
                     height: 40,
                   ),
-            // : Image.network(
-            //     category.icon,
-            //     height: 40,
-            //     fit: BoxFit.fitWidth,
-            //     // color: isSelected ? Colors.white : Colors.black,
-            //   ),
             const SizedBox(
               height: 10,
             ),
             Text(
               category.title,
-              style: TextStyle(color: isSelected ? Colors.white : Colors.black),
+              style: TextStyle(color: isSelected ? const Color(0xffF26522) : Colors.white),
             )
           ],
         ),

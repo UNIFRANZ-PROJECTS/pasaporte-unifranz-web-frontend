@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 ThemeData styleLigth() {
   return ThemeData.light().copyWith(
+    primaryColor: const Color(0xffF26522),
     useMaterial3: true,
     scaffoldBackgroundColor: const Color(0xfff2f2f2),
     appBarTheme: const AppBarTheme().copyWith(
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         elevation: 0,
         titleTextStyle: const TextStyle(color: Colors.black),
@@ -37,16 +39,20 @@ ThemeData styleLigth() {
           bodyMedium: const TextStyle(color: Color(0xff21232A)),
         )
         .apply(
-          fontFamily: 'Poppins',
+          fontFamily: "unifranz",
         ),
     inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
           labelStyle: const TextStyle(color: Colors.grey),
           hintStyle: const TextStyle(color: Colors.grey),
           focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: Color(0xffFC5000))),
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(color: Color(0xffF26522)),
+          ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
           errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: Colors.grey, width: 2)),
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(color: Colors.grey, width: 2),
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
             borderSide: const BorderSide(
@@ -62,7 +68,10 @@ ThemeData styleLigth() {
             ),
           ),
           iconColor: Colors.black,
-          errorStyle: const TextStyle().apply(color: Colors.red, fontFamily: 'Poppins'),
+          errorStyle: const TextStyle().apply(
+            color: Colors.red,
+            fontFamily: "unifranz",
+          ),
         ),
   );
 }

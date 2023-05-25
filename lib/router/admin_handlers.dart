@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:passport_unifranz_web/services/local_storage.dart';
-import 'package:passport_unifranz_web/views/admin/access/login_view.dart';
-import 'package:passport_unifranz_web/views/admin/dashboard/dashboard_view.dart';
+import 'package:passport_unifranz_web/views/admin/login_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/dashboard/dashboard_view.dart';
 import 'package:passport_unifranz_web/views/home/campus.dart';
 import 'package:passport_unifranz_web/views/home/home.dart';
 import 'package:passport_unifranz_web/provider/auth_provider.dart';
@@ -32,7 +32,7 @@ class Home {
           params['uid']!.first != 'ea' &&
           params['uid']!.first != 'cbba' &&
           params['uid']!.first != 'sc' &&
-          params['uid']!.first != json.decode(LocalStorage.prefs.getString('student')!)['id']) {
+          params['uid']!.first != json.decode(LocalStorage.prefs.getString('student')!)['uid']) {
         return const CampusScreen();
       }
       return const HomeScreen();

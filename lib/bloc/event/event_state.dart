@@ -39,5 +39,5 @@ class EventState extends Equatable {
           eventCtrl: eventCtrl ?? this.eventCtrl);
 
   @override
-  List<Object> get props => [existEvents, listEvents];
+  List<Object> get props => [existEvents, listEvents, listEventsCalendar, isLoading, ascending];
 }

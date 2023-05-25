@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:passport_unifranz_web/models/session_model.dart';
 import 'package:passport_unifranz_web/router/router.dart';
 import 'package:passport_unifranz_web/services/cafe_api.dart';
 import 'package:passport_unifranz_web/services/local_storage.dart';
@@ -19,12 +20,12 @@ class AuthProvider extends ChangeNotifier {
     isAuthenticated();
   }
 
-  login(Response<dynamic> resp) {
-    debugPrint('authResponse.token ${resp.data}');
+  login(Response<dynamic> res) {
     authStatus = AuthStatus.authenticated;
-    LocalStorage.prefs.setString('token', resp.data['token']);
+    final session = sessionModelFromJson(json.encode(res.data));
+    LocalStorage.prefs.setString('token', session.token);
     LocalStorage.prefs.setString('mode', 'admin');
-    LocalStorage.prefs.setString('userData', json.encode(resp.data));
+    LocalStorage.prefs.setString('userData', json.encode(res.data));
     NavigationService.replaceTo(Flurorouter.dashboardRoute);
 
     CafeApi.configureDio();
@@ -37,9 +38,7 @@ class AuthProvider extends ChangeNotifier {
     authStatusStudent = AuthStatusStudent.authenticated;
     LocalStorage.prefs.setString('tokenStudent', resp.data['token']);
     LocalStorage.prefs.setString('mode', 'student');
-    // Map<String, dynamic> decodedToken = decodeJwt(res.data['token']);
-    // debugPrint('${decodedToken}');
-    LocalStorage.prefs.setString('student', json.encode(resp.data['cliente']));
+    LocalStorage.prefs.setString('student', json.encode(resp.data));
     CafeApi.configureDio();
 
     notifyListeners();
@@ -107,6 +106,7 @@ class AuthProvider extends ChangeNotifier {
   logout() {
     LocalStorage.prefs.remove('token');
     authStatus = AuthStatus.notAuthenticated;
+    NavigationService.replaceTo(Flurorouter.loginRoute);
     notifyListeners();
   }
 

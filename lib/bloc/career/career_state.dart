@@ -26,5 +26,5 @@ class CareerState extends Equatable {
         sortColumnIndex: sortColumnIndex ?? this.sortColumnIndex,
       );
   @override
-  List<Object> get props => [];
+  List<Object> get props => [listCareer, isLoading, ascending];
 }

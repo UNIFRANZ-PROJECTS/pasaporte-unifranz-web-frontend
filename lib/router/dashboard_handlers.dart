@@ -1,22 +1,21 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:passport_unifranz_web/views/admin/access/login_view.dart';
-import 'package:passport_unifranz_web/views/admin/calendar/calendar_view.dart';
-import 'package:passport_unifranz_web/views/admin/guests/guests_view.dart';
-import 'package:passport_unifranz_web/views/admin/dashboard/dashboard_view.dart';
+import 'package:passport_unifranz_web/views/admin/login_view.dart';
 import 'package:passport_unifranz_web/provider/auth_provider.dart';
 import 'package:passport_unifranz_web/provider/sidemenu_provider.dart';
 import 'package:passport_unifranz_web/router/router.dart';
-import 'package:passport_unifranz_web/views/admin/permisions/permisions_view.dart';
-import 'package:passport_unifranz_web/views/admin/reports/reports_view.dart';
-import 'package:passport_unifranz_web/views/admin/roles/roles_view.dart';
-import 'package:passport_unifranz_web/views/admin/students/students_view.dart';
-import 'package:passport_unifranz_web/views/admin/type_users/type_users_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/calendar/calendar_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/categories/categories_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/dashboard/dashboard_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/events/events_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/guests/guests_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/permisions/permisions_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/reports/reports_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/roles/roles_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/students/students_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/type_users/type_users_view.dart';
+import 'package:passport_unifranz_web/views/admin/pages/users/users_view.dart';
 import 'package:provider/provider.dart';
-
-import '../views/admin/categories/categories_view.dart';
-import '../views/admin/events/events_view.dart';
-import '../views/admin/users/users_view.dart';
 
 class DashboardHandlers {
   //dashboard

@@ -1,18 +1,16 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-// import 'package:dio/io.dart';
+
 import 'package:flutter/material.dart';
 import 'package:passport_unifranz_web/services/local_storage.dart';
-
-// typedef MapOrFormData = Map<String, dynamic> | FormData;
-// typedef Compare<T> = bool Function(T a, T b);
+import 'package:passport_unifranz_web/services/services.dart';
 
 class CafeApi {
   static final _dio = Dio();
   static Future<void> configureDio() async {
     // Base del url
-    _dio.options.baseUrl = 'http://localhost:8001/api';
+    _dio.options.baseUrl = host();
     // Configurar Headers
     _dio.options.headers = {
       'Content-Type': 'application/json',
@@ -57,7 +55,7 @@ class CafeApi {
     }
   }
 
-  static Future post(String path, FormData? data) async {
+  static Future post(String path, Map<String, dynamic> data) async {
     try {
       debugPrint('==========================================');
       debugPrint('== body $data');
@@ -67,12 +65,13 @@ class CafeApi {
       debugPrint('== status ${resp.statusCode}');
       return resp;
     } on DioError catch (e) {
-      debugPrint('${e.response}');
+      debugPrint('err $e');
+      // debugPrint('${e.response}');
       rethrow;
     }
   }
 
-  static Future put(String path, FormData? data) async {
+  static Future put(String path, Map<String, dynamic>? data) async {
     try {
       debugPrint('==========================================');
       debugPrint('== body $data');

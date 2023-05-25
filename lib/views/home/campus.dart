@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:passport_unifranz_web/provider/auth_provider.dart';
 import 'package:passport_unifranz_web/services/navigation_service.dart';
-import 'package:passport_unifranz_web/views/client/access/login_client.dart';
-import 'package:passport_unifranz_web/views/client/headers.dart';
+import 'package:passport_unifranz_web/views/home/access/login_client.dart';
+import 'package:passport_unifranz_web/views/home/header_home.dart';
 import 'package:provider/provider.dart';
 
 class CampusScreen extends StatefulWidget {
@@ -22,9 +22,11 @@ class _CampusScreenState extends State<CampusScreen> {
     final size = MediaQuery.of(context).size;
     return Column(
       children: [
-        HedersComponent(
-          onPressLogin: () => loginshow(context),
-          onPressLogout: () => logout(context),
+        HaaderHome(
+          title: 'Eventos',
+          logIn: () => loginshow(context),
+          logOut: () => logout(context),
+          isBlack: true,
         ),
         Expanded(
             child: (size.width > 1000)

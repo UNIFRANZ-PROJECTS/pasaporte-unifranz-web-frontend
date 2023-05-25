@@ -1,6 +1,6 @@
 # passport_unifranz_web
 
-A new Flutter project.
+Eventos únicos en la UNIFRANZ
 
 ## Getting Started
 

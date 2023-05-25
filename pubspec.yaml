@@ -1,5 +1,5 @@
 name: passport_unifranz_web
-description: A new Flutter project.
+description: Eventos únicos en la UNIFRANZ
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: '>=3.0.2 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -29,39 +29,47 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^3.0.2
-  bloc: ^8.1.1
+  bloc: ^8.1.2
   calendar_view: ^1.0.3
   cupertino_icons: ^1.0.5
-  dio: ^5.1.1
-  drop_down_list: ^0.0.4
+  dio: ^5.1.2
+  drop_down_list: ^0.0.5
   email_validator: ^2.1.17
   equatable: ^2.0.5
-  file_picker: ^5.2.7
+  file_picker: ^5.3.2
   fluro: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^2.0.4
-  get_it: ^7.2.0
-  google_fonts: ^4.0.3
-  intl: ^0.17.0
+  flutter_svg: ^2.0.6
+  get_it: ^7.6.0
+  http: ^0.13.0
+  intl: ^0.18.0
   modal_bottom_sheet: ^2.1.2
   multi_select_flutter: ^4.1.3
-  printing: ^5.10.3
+  printing: ^5.10.4
   provider: ^6.0.5
-  shared_preferences: ^2.1.0
-  syncfusion_flutter_charts: ^21.1.37
-  syncfusion_flutter_datepicker: ^21.1.37
-  syncfusion_localizations: ^21.1.37
-  universal_html: ^2.2.1
+  shared_preferences: ^2.1.1
+  syncfusion_flutter_charts: ^21.2.6
+  syncfusion_flutter_datepicker: ^21.2.6
+  syncfusion_localizations: ^21.2.6
+  universal_html: ^2.2.2
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 dependency_overrides:
+
+  shared_preferences_windows: any
+  path_provider_platform_interface: any
+  path_provider_windows: any
+  shared_preferences_platform_interface: any
+  shared_preferences_linux: any
+  ffi: any
+  win32: any
   modal_bottom_sheet:
     git:
       url: https://github.com/danReynolds/modal_bottom_sheet.git
@@ -80,8 +88,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/icons/
     - assets/gifs/
+
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -94,6 +102,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: unifranz
+      fonts:
+        - asset: assets/fonts/tipoletra.otf
   # fonts:
   #   - family: Schyler
   #     fonts:

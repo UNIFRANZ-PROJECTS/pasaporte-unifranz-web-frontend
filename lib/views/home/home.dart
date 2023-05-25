@@ -1,23 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:passport_unifranz_web/bloc/blocs.dart';
+import 'package:passport_unifranz_web/components/inputs/search.dart';
 import 'package:passport_unifranz_web/models/category_model.dart';
 import 'package:passport_unifranz_web/models/event_model.dart';
 import 'package:passport_unifranz_web/provider/auth_provider.dart';
 import 'package:passport_unifranz_web/views/home/card_category.dart';
 import 'package:passport_unifranz_web/views/home/card_event.dart';
-
-import 'package:passport_unifranz_web/components/compoents.dart';
 import 'package:passport_unifranz_web/provider/app_state.dart';
 import 'package:passport_unifranz_web/services/cafe_api.dart';
 import 'package:passport_unifranz_web/services/navigation_service.dart';
 import 'package:passport_unifranz_web/services/services.dart';
-import 'package:passport_unifranz_web/views/client/headers.dart';
-import 'package:passport_unifranz_web/views/client/access/login_client.dart';
+import 'package:passport_unifranz_web/views/home/header_home.dart';
+import 'package:passport_unifranz_web/views/home/access/login_client.dart';
+import 'package:passport_unifranz_web/views/home/home_page_background.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_html/html.dart';
 
@@ -52,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   callAllEvents() async {
     final eventBloc = BlocProvider.of<EventBloc>(context, listen: false);
     String currentRoute = window.location.href;
-    String ultimo = currentRoute.split("#/").last;
+    String ultimo = currentRoute.split("/").last;
     return CafeApi.httpGet(eventsCampus(ultimo)).then((res) async {
       final events = eventModelFromJson(json.encode(res.data['eventos']));
       debugPrint(' ressssss $events');
@@ -64,86 +62,98 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final selectedCategoryId = Provider.of<AppState>(context).selectedCategoryId;
     final size = MediaQuery.of(context).size;
+
+    String? title;
+    switch (window.location.href.split("/").last) {
+      case 'lp':
+        title = 'La Paz';
+        break;
+      case 'ea':
+        title = 'El Alto';
+        break;
+      case 'cbba':
+        title = 'Cochabamba';
+        break;
+      case 'sc':
+        title = 'Santa Cruz';
+        break;
+      default:
+        title = '';
+    }
     return WillPopScope(
         onWillPop: _onBackPressed,
-        child: Column(
-          children: [
-            HedersComponent(
-              onPressLogin: () => loginshow(context),
-              onPressLogout: () => logout(context),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InputComponent(
-                        textInputAction: TextInputAction.done,
-                        controllerText: searchCtrl,
-                        onChanged: (value) {
-                          if (value.trim().isNotEmpty) {
-                            setState(() => searchState = true);
-                          } else {
-                            setState(() => searchState = false);
-                          }
-                        },
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]"))],
-                        onEditingComplete: () {},
-                        validator: (value) {
-                          if (value.isNotEmpty) {
-                            return null;
-                          } else {
-                            return 'complemento';
-                          }
-                        },
-                        keyboardType: TextInputType.text,
-                        textCapitalization: TextCapitalization.characters,
-                        icon: Icons.search,
-                        labelText: "Buscar",
-                      ),
-                    )),
-                Expanded(
-                    flex: 3,
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                CategoryWidget(category: categorytodos),
-                                for (final category in state.listCategories) CategoryWidget(category: category)
-                              ],
+        child: Stack(children: <Widget>[
+          HomePageBackground(
+            screenHeight: MediaQuery.of(context).size.height,
+          ),
+          Column(
+            children: [
+              HaaderHome(
+                title: 'Eventos sede $title',
+                logIn: () => loginshow(context),
+                logOut: () => logout(context),
+              ),
+              (size.width > 1000)
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: listComponents(),
+                    )
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: listComponents(),
+                    ),
+              Expanded(
+                child: BlocBuilder<EventBloc, EventState>(
+                  builder: (context, state) {
+                    final events = _getEvents(state, selectedCategoryId);
+                    return (size.width > 1000)
+                        ? GridView.count(
+                            childAspectRatio: 1,
+                            crossAxisCount: 4,
+                            children: events.map(itemEvent).toList(),
+                          )
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: events.map(itemEvent).toList(),
                             ),
                           );
-                        }))),
-              ],
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Hoy es ${DateFormat('dd, MMMM yyyy ', "es_ES").format(DateTime.now())}')),
-            Expanded(
-              child: BlocBuilder<EventBloc, EventState>(
-                builder: (context, state) {
-                  final events = _getEvents(state, selectedCategoryId);
-                  return (size.width > 1000)
-                      ? GridView.count(
-                          childAspectRatio: 1,
-                          crossAxisCount: 4,
-                          children: events.map(itemEvent).toList(),
-                        )
-                      : SingleChildScrollView(
-                          child: Column(
-                            children: events.map(itemEvent).toList(),
-                          ),
-                        );
-                },
+                  },
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )
+        ]));
+  }
+
+  List<Widget> listComponents() {
+    return [
+      SearchWidget(
+        isWhite: true,
+        controllerText: searchCtrl,
+        onChanged: (value) {
+          if (value.trim().isNotEmpty) {
+            setState(() => searchState = true);
+          } else {
+            setState(() => searchState = false);
+          }
+        },
+      ),
+      Flexible(
+          flex: 3,
+          child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      CategoryWidget(category: categorytodos),
+                      for (final category in state.listCategories) CategoryWidget(category: category)
+                    ],
+                  ),
+                );
+              }))),
+    ];
   }
 
   List<EventModel> _getEvents(EventState state, String selectedCategoryId) {

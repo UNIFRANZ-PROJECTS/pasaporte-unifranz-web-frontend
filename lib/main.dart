@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:passport_unifranz_web/services/cafe_api.dart';
 import 'package:passport_unifranz_web/views/admin/dashboard_layout.dart';
-import 'package:passport_unifranz_web/views/layout.dart';
-import 'package:passport_unifranz_web/views/pages/splash_layout.dart';
+import 'package:passport_unifranz_web/views/home/layout.dart';
+import 'package:passport_unifranz_web/views/splash_layout.dart';
 import 'package:passport_unifranz_web/provider/app_state.dart';
 import 'package:passport_unifranz_web/provider/auth_provider.dart';
 import 'package:passport_unifranz_web/provider/sidemenu_provider.dart';
@@ -21,10 +21,11 @@ import 'services/navigation_service.dart';
 
 void main() async {
   setupLocator();
-  Flurorouter.configureRoutes();
+  await LocalStorage.configurePrefs();
+
   WidgetsFlutterBinding.ensureInitialized();
   CafeApi.configureDio();
-  await LocalStorage.configurePrefs();
+  Flurorouter.configureRoutes();
   runApp(
     MultiBlocProvider(
         providers: [
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       theme: styleLigth(),
-      title: 'PASAPORTE UNIFRANZ',
+      title: 'AGENDA UNIFRANZ',
       initialRoute: '/',
       onGenerateRoute: Flurorouter.router.generator,
       navigatorKey: NavigationService.navigatorKey,
